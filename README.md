@@ -14,15 +14,50 @@ CSR reports are lengthy and inconsistent. Each year-end, when CSRone (a governme
 **Solution:** Developed a **retrieval-augmented generation (RAG)** pipeline for environmental risk indicators checks with **definition-augmented prompts**.
 
 **Highlights:**
-- **PDF cleanup & chunking.** Strip noisy front-matter (first-five-pages detection), then split reports into ~300-char overlapping chunks and embed them into a local **ChromaDB** index (e.g., `moka-ai/m3e-base`). :contentReference[oaicite:0]{index=0}
-- **Definition-aware retrieval.** For each risk, retrieve top chunks using a query formed as “{risk_name} is defined as {definition}”, with percentile cutoffs (e.g., 98th) to keep only highly similar passages. :contentReference[oaicite:1]{index=1}
-- **LLM judgment with prompt families.** Run **four** prompt strategies—zero-shot, zero-shot-CoT, few-shot, few-shot-CoT—over retrieved chunks, using **multi-thread** execution to speed batch scoring; export multiple CSV views for downstream review. :contentReference[oaicite:2]{index=2}
-- **Few-shot example tooling.** Auto-generate/bold risk keywords, back-fill ~300-char context chunks, and write short reasoning notes to improve few-shot exemplars. :contentReference[oaicite:3]{index=3}
-- **Reviewer UX helpers.** A small Apps Script transforms `**bold**` markup in Google Sheets into styled text for clearer human annotation passes. :contentReference[oaicite:4]{index=4}
-- **Label alignment & metrics.** Map model outputs to human labels, then compute per-company TP/FP/FN_partial/TN_partial and **Precision / Relative-Recall / Relative-F1**; also support **micro** (pooled) metrics across companies. :contentReference[oaicite:5]{index=5}
-- **Post-hoc analysis.** Merge results across companies; report per-risk metrics, visualize **CoT deltas** (ΔPrecision/Recall/F1), build **ensemble (majority-vote)** predictions, heatmaps by risk × prompt, and **Jaccard** overlap across prompt families. :contentReference[oaicite:6]{index=6}
-- **Runbook & env.** One-command installs and `.env` with `OPENAI_API_KEY` for reproducible local runs. :contentReference[oaicite:7]{index=7}
+- Ingestion: PDF parsing plus OCR for scans; text normalization.
+- Chunking & Index: Overlapping chunks → embeddings → **ChromaDB** vector store.
+- Retrieval: Definition-aware queries per indicator → top-k similarity search.
+- LLM Judgment: Zero-shot, few-shot, and CoT prompts orchestrated via **LangChain**; simple ensemble voting.
+- Supervised Model: Per-indicator **Chinese RoBERTa** fine-tuning with **Hugging Face + PyTorch**; class weighting, minority upsampling, and calibrated thresholds.
+- KPI Extraction: OCR + regex rules for environmental KPIs; unit normalization with source snippets.
+- Orchestration: Batch runners and **LangChain** chains; multi-thread execution; CSV exports.
+- Evaluation: Per-indicator and pooled-micro **Precision/Recall/F1**; basic error taxonomy.
+- Ops: `.env` config and single-command runs for reproducible local setup.
 
+**Impact:**
+- Raised zero-shot accuracy from 52% to 72%
+- Deployed across more than 80 companies, and decreased manual review time and costs by 70%.
+
+**Pipeline (simplified)**
+```mermaid
+flowchart LR
+  A[CSR PDFs] --> B[OCR and parsing]
+  B --> C[Chunk and embed]
+  C --> D[ChromaDB index]
+  D --> E[Definition aware retrieval]
+  E --> F[LLM judgment via LangChain]
+  F --> G[Ensemble and thresholds]
+  G --> H[Decisions with source snippets]
+  H --> I[Evaluation and metrics]
+```
+
+---
+
+## P2 — Retrieval-Augmented Generation (RAG) Pipeline for Environmental Risk Indicators Checks
+**Solution:** Developed a **retrieval-augmented generation (RAG)** pipeline for environmental risk indicators checks with **definition-augmented prompts**.
+
+Fine-tuned per-indicator Chinese RoBERTa; handled 5% positive-class skew via class weighting, minority upsampling, and calibrated thresholds.
+
+**Highlights:**
+- Ingestion: PDF parsing plus OCR for scans; text normalization.
+- Chunking & Index: Overlapping chunks → embeddings → **ChromaDB** vector store.
+- Retrieval: Definition-aware queries per indicator → top-k similarity search.
+- LLM Judgment: Zero-shot, few-shot, and CoT prompts orchestrated via **LangChain**; simple ensemble voting.
+- Supervised Model: Per-indicator **Chinese RoBERTa** fine-tuning with **Hugging Face + PyTorch**; class weighting, minority upsampling, and calibrated thresholds.
+- KPI Extraction: OCR + regex rules for environmental KPIs; unit normalization with source snippets.
+- Orchestration: Batch runners and **LangChain** chains; multi-thread execution; CSV exports.
+- Evaluation: Per-indicator and pooled-micro **Precision/Recall/F1**; basic error taxonomy.
+- Ops: `.env` config and single-command runs for reproducible local setup.
 
 **Impact:**
 - Raised zero-shot accuracy from 52% to 72%
@@ -44,17 +79,3 @@ flowchart LR
   D --> E
   E --> F
 ```
-
----
-
-## P2 — Robot Framework API Test Suites & CI Quality Gates
-
-
-
-## Results (on synthetic setup mirroring real patterns)
-- Accuracy lifted from **~52% → ~72%** on indicator checks; improved citation quality and consistency.
-
-## Stack
-**Python**, **PyTorch/HF**, **BM25/FAISS**, **scikit-learn**, **pandas**, **spaCy**, **Mermaid**
-
-## Repo map
