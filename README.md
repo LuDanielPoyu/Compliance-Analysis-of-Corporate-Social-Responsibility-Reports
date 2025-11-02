@@ -25,8 +25,8 @@ CSR reports are lengthy and inconsistent. Each year-end, when CSRone (a governme
 - **Ops:** Use a `.env` config and one-command scripts for reproducible setup and runs.
 
 **Impact:**
-- Raised zero-shot accuracy from 52% to 72%
-- Deployed across more than 80 companies, and decreased manual review time and costs by 70%.
+- **Accuracy:** Raised zero-shot accuracy from 52% to 72%
+- **Availability:** Deployed across more than 80 companies, and decreased manual review time and costs by 70%.
 
 **Pipeline (simplified)**
 ```mermaid
@@ -55,9 +55,9 @@ flowchart LR
 - **Ops:** Versioned models and configs with fixed seeds and one-command training and evaluation for fully reproducible runs.
 
 **Impact:**
-- Imbalance handled: Stable performance with ~5% positives via weighting, upsampling, and calibration.
-- Quality improved: Higher pooled F1 and better recall at fixed precision versus zero-shot prompts alone.
-- Operational: Reliable, CPU-friendly batch scoring and clear per-indicator thresholds reduced false positives and reviewer rework.
+- **Imbalance handled**: Stable performance with ~5% positives via weighting, upsampling, and calibration.
+- **Quality improved**: Higher pooled F1 and better recall at fixed precision versus zero-shot prompts alone.
+- **Operational**: Reliable, CPU-friendly batch scoring and clear per-indicator thresholds reduced false positives and reviewer rework.
 
 **Pipeline (simplified)**
 ```mermaid
