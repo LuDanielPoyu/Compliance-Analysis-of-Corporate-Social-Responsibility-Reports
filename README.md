@@ -12,6 +12,7 @@ CSR reports are lengthy and inconsistent. Each year-end, when CSRone (a governme
 
 ## P1 — Retrieval-Augmented Generation (RAG) Pipeline for Environmental Risk Indicators Checks
 **Solution:** Developed a **retrieval-augmented generation (RAG)** pipeline for environmental risk indicators checks with **definition-augmented prompts**.
+<img width="817" height="456" alt="截圖 2025-11-04 凌晨1 00 15" src="https://github.com/user-attachments/assets/27d3f7c0-8463-402a-bc89-282b3d080141" />
 
 **Highlights:**
 - **Ingestion:** Parse PDFs and run OCR for scans, then clean and normalize the text.
