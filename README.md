@@ -1,4 +1,6 @@
-# Compliance-Analysis-of-Corporate-Social-Responsibility-Reports (**Original Repo:[https://github.com/csrone-dev]**)
+# Compliance-Analysis-of-Corporate-Social-Responsibility-Reports 
+
+**Original Repo:[https://github.com/csrone-dev]**
 
 **Role:** NLP/ML Engineer (Student Research Project)
 
