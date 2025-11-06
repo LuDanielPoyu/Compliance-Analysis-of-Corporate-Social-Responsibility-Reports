@@ -1,7 +1,8 @@
-# Compliance-Analysis-of-Corporate-Social-Responsibility-Reports
+# Compliance-Analysis-of-Corporate-Social-Responsibility-Reports (**Original Repo:[https://github.com/csrone-dev]**)
 
 **Role:** NLP/ML Engineer (Student Research Project)
-**When:** July 2023 – June 2024 · **Original Repo:[https://github.com/csrone-dev]**
+
+**When:** July 2023 – June 2024
 
 > **Disclaimer:** This portfolio uses sanitized descriptions and **synthetic examples only**. No proprietary code, data, screenshots, internal IDs, or configurations from ASML are included.
 
