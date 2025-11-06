@@ -6,7 +6,7 @@
 
 **When:** July 2023 – June 2024
 
-> **Disclaimer:** This portfolio uses sanitized descriptions and **synthetic examples only**. No proprietary code, data, screenshots, internal IDs, or configurations from ASML are included.
+> **Disclaimer:** This portfolio uses sanitized descriptions and **synthetic examples only**. No proprietary code, data, screenshots, internal IDs, or configurations from CSROne are included.
 
 ---
 
@@ -23,7 +23,7 @@ CSR reports are lengthy and inconsistent. Each year-end, when CSRone (a governme
 - **Chunking & Index:** Split text into overlapping chunks, create embeddings, and store them in **ChromaDB** for fast similarity search.
 - **Retrieval:** For each indicator, form a definition-aware query and fetch the top-k relevant chunks.
 - **LLM Judgment:** Use **LangChain** to run zero-shot, few-shot, and chain-of-thought prompts over retrieved context, then ensemble the results.
-- **Supervised Model:** Fine-tune **Chinese RoBERTa** per indicator with **Hugging Face + PyTorch**; handle class imbalance with weights and light upsampling; calibrate probabilities and thresholds.
+- **Supervised Model:** Fine-tune **Chinese RoBERTa** per-indicator with **Hugging Face + PyTorch**; handle class imbalance with weights and light upsampling; calibrate probabilities and thresholds.
 - **KPI Extraction:** Use OCR and regex to pull environmental KPIs, normalize units, and attach source snippets for auditability.
 - **Orchestration:** Provide batch runners and **LangChain** chains with multi-thread execution and CSV exports for reviewers.
 - **Evaluation:** Report per-indicator and pooled (micro) **Precision/Recall/F1**, plus a simple error taxonomy to diagnose misses.
@@ -39,7 +39,7 @@ flowchart LR
   A[CSR PDFs] --> B[OCR and parsing]
   B --> C[Chunk and embed]
   C --> D[ChromaDB index]
-  D --> E[Definition aware retrieval]
+  D --> E[Definition-aware retrieval]
   E --> F[LLM judgment via LangChain]
   F --> G[Ensemble and thresholds]
   G --> H[Decisions with source snippets]
@@ -49,7 +49,7 @@ flowchart LR
 ---
 
 ## P2 — Fine-tuned per-indicator Chinese RoBERTa for RAG Pipeline's supervised model 
-**Solution:** Fine-tuned a Chinese RoBERTa classifier per indicator, addressing ~5% positive-class skew with **class weighting** and **minority upsampling**, then **calibrated probabilities** and **per-indicator thresholds** to serve as the **supervised judgment stage** in the RAG pipeline.
+**Solution:** Fine-tuned a Chinese RoBERTa classifier per-indicator, addressing ~5% positive-class skew with **class weighting** and **minority upsampling**, then **calibrated probabilities** and **per-indicator thresholds** to serve as the **supervised judgment stage** in the RAG pipeline.
 
 **Highlights:**
 - **Data:** Built per-indicator datasets, balanced positives and negatives, removed duplicates, split by company to avoid leakage, and tokenized with Hugging Face.
@@ -67,10 +67,10 @@ flowchart LR
 **Pipeline (simplified)**
 ```mermaid
 flowchart LR
-  A[Data per indicator] --> B[Tokenize and split]
-  B --> C[Fine tune RoBERTa]
+  A[Data per-indicator] --> B[Tokenize and split]
+  B --> C[Fine-tune RoBERTa]
   C --> D[Calibrate probabilities]
-  D --> E[Set per indicator thresholds]
+  D --> E[Set per-indicator thresholds]
   E --> F[Batch scoring on CPU]
   F --> G[JSON CSV outputs]
   G --> H[Supervised stage in RAG]
